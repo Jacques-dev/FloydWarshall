@@ -31,7 +31,7 @@ public class Controler {
 	public void print() {
 		fileView();
 		matriceAdjacence();
-		patriceValeur();
+		matriceValeur();
 	}
 
 	private void fileView() {
@@ -87,7 +87,7 @@ public class Controler {
 		System.out.println("---------------\n");
 	}
 	
-	private void patriceValeur() {
+	private void matriceValeur() {
 		StringBuilder s = new StringBuilder();
 		
 		ArrayList<Peer> peers = graph.getPeers();
