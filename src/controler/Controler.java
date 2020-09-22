@@ -87,9 +87,7 @@ public class Controler {
 		System.out.println("---------------\n");
 	}
 	
-	private void matriceValeur() {
-		StringBuilder s = new StringBuilder();
-		
+	private int[][] getMatriceValeur() {
 		ArrayList<Peer> peers = graph.getPeers();
 		
 		ArrayList<Node> nodes = graph.getNodes();
@@ -108,23 +106,41 @@ public class Controler {
 						matrice[i][j] = peers.get(k).getArc().getValue();
 						break;
 					} else {
-						matrice[i][j] = 0;
+						matrice[i][j] = 9999;
 					}
 				}
 			}
 		}
 		
-		s.append("  ");
+	return matrice;
+	}
+	
+	private void matriceValeur() {
+		StringBuilder s = new StringBuilder();
+		
+		ArrayList<Node> nodes = graph.getNodes();
+		
+		int size = nodes.size();
+		
+		int[][] matrice = getMatriceValeur();
+		
+		
+		s.append("\t");
 		for (Node n : nodes) {
-			s.append(n.getId() + " ");
+			s.append(n.getId() + "\t");
 		}
 		
 		s.append("\n");
 		
 		for (int i = 0 ; i != size ; i++) {
-			s.append(i + " ");
+			s.append(i + "\t");
 			for (int j = 0 ; j != size ; j++) {
-				s.append(matrice[i][j] + " ");
+				if (matrice[i][j] == 9999) {
+					s.append("NULL\t");
+				}
+				else {
+					s.append(matrice[i][j] + "\t");
+				}
 			}
 			s.append("\n");
 		}
@@ -141,33 +157,82 @@ public class Controler {
 			System.out.print( "Show all the route y/n : " );
 			Scanner scanner = new Scanner(System.in);
 			if (scanner.nextLine().equals("n")) {
-				OneByOne();
+				OneByOne(FloydWarshall());
 			} else {
-				AllOfThem();
+				AllOfThem(FloydWarshall());
 			}
     	} catch(Exception e) {
     		System.out.println("");
     	}
 	}
 	
-	private void AllOfThem() {
+	private void AllOfThem(int floydWarshallGraph[][]) {
+		int size = graph.getNbNode();
+
+		StringBuilder s = new StringBuilder();
+		
+		ArrayList<Node> nodes = graph.getNodes();
+		
+		int[][] matrice = getMatriceValeur();
 		
 		
+		s.append("\t");
+		for (Node n : nodes) {
+			s.append(n.getId() + "\t");
+		}
+		
+		s.append("\n\n");
+		
+		for (int i = 0; i < size; i++) {
+			s.append(i + "\t");
+			for (int j = 0; j < size; j++) {
+				if (floydWarshallGraph[i][j] == 9999) {
+					s.append("x\t");
+				}
+				else {
+					s.append(floydWarshallGraph[i][j] + "\t");
+				}
+			}
+			s.append("\n");
+		}
+		
+		System.out.println("----Floyd Warshall----\n");
+		System.out.println(s.toString());
+		System.out.println("----------------------\n");
 	}
 
-	private void OneByOne() {
+	private void OneByOne(int floydWarshallGraph[][]) {
 		Scanner scanner = new Scanner(System.in);
         System.out.print( "Enter the first node : " );
         int n1 = Integer.parseInt(scanner.nextLine());
         System.out.print( "Enter the second node : " );
         int n2 = Integer.parseInt(scanner.nextLine());
         
-        
+        StringBuilder s = new StringBuilder();
+		
+        s.append("(" + n1 + ") - " + (floydWarshallGraph[n1][n2] == 9999 ? "path does not exist" : floydWarshallGraph[n1][n2]) + " -> (" + n2 + ")");
+        s.append("\n");
+		
+		System.out.println(s.toString());
 		
 	}
 	
-	public void FloydWarshall() {
+	public int[][] FloydWarshall() {
+		int size = graph.getNbNode();
+		int graphValue[][] = getMatriceValeur();
+
+		for (int i = 0; i < size; i++) {
+			for (int j = 0; j < size; j++) {
+				for (int k = 0; k < size; k++) {
+					if (graphValue[j][i] + graphValue[i][k] < graphValue[j][k]) {
+						graphValue[j][k] = graphValue[j][i] + graphValue[i][k];
+					}
+				}
+			}
+		}
 		
+		
+		return graphValue;
 	}
 
 	public boolean isTheGraphAnAbsorberCircuit() {

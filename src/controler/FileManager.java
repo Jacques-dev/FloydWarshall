@@ -31,8 +31,19 @@ public class FileManager {
 		int lineIndex = 0;//to avoid to read the two first lines, cause we don't need them.
 		
 		while ((line = text.readLine()) != null) {
-			if (lineIndex > 1) {
-				g.add(readNode(line));
+			//if (lineIndex > 1) {
+			//	g.add(readNode(line));
+			//}
+			switch (lineIndex) {
+				case 0:
+					g.setNbNode(Integer.parseInt(line));
+					break;
+				case 1:
+					g.setNbArc(Integer.parseInt(line));
+					break;
+				default:
+					g.add(readNode(line));
+					break;
 			}
 			lineIndex +=1;
 		}
