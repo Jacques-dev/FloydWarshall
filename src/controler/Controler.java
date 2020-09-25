@@ -65,34 +65,6 @@ public class Controler {
 		System.out.println("---------------\n");
 	}
 	
-	private int[][] getMatriceValeur() {
-		ArrayList<Peer> peers = graph.getPeers();
-		
-		ArrayList<Node> nodes = graph.getNodes();
-		
-		int size = nodes.size();
-		
-		int[][] matrice = new int[size][size];
-		
-		for (int i = 0 ; i != size ; i++) {
-			for (int j = 0 ; j != size ; j++) {
-				for (int k = 0 ; k != peers.size() ; k++) {
-					Node n1 = peers.get(k).getNodes().get(0);
-					Node n2 = peers.get(k).getNodes().get(1);
-					
-					if (n1.getId() == i && n2.getId() == j) {
-						matrice[i][j] = peers.get(k).getArc().getValue();
-						break;
-					} else {
-						matrice[i][j] = 9999;
-					}
-				}
-			}
-		}
-		
-	return matrice;
-	}
-	
 	private void matriceValeur() {
 		StringBuilder s = new StringBuilder();
 		
@@ -127,19 +99,56 @@ public class Controler {
 		System.out.println(s.toString());
 		System.out.println("---------------\n");
 	}
+	
+	private int[][] getMatriceValeur() {
+		ArrayList<Peer> peers = graph.getPeers();
+		
+		ArrayList<Node> nodes = graph.getNodes();
+		
+		int size = nodes.size();
+		
+		int[][] matrice = new int[size][size];
+		
+		for (int i = 0 ; i != size ; i++) {
+			for (int j = 0 ; j != size ; j++) {
+				for (int k = 0 ; k != peers.size() ; k++) {
+					Node n1 = peers.get(k).getNodes().get(0);
+					Node n2 = peers.get(k).getNodes().get(1);
+					
+					if (n1.getId() == i && n2.getId() == j) {
+						matrice[i][j] = peers.get(k).getArc().getValue();
+						break;
+					} else {
+						matrice[i][j] = 9999;
+					}
+				}
+			}
+		}
+		
+	return matrice;
+	}
 
 	public void FloydAlgoritm() {
 		try {
-			System.out.print( "Show all the route y/n : " );
+			System.out.print( "Show all the route ? y/n : " );
 			Scanner scanner = new Scanner(System.in);
 			if (scanner.nextLine().equals("n")) {
 				OneByOne(FloydWarshall());
+						
+				System.out.print( "Try an other route ? y/n : " );
+				Scanner scanner2 = new Scanner(System.in);
+				while (scanner2.nextLine().equals("y")) {
+					OneByOne(FloydWarshall());
+					System.out.print( "Try an other route ? y/n : " );
+					scanner2 = new Scanner(System.in);
+				}
 			} else {
 				AllOfThem(FloydWarshall());
 			}
     	} catch(Exception e) {
     		System.out.println("");
     	}
+		System.out.println("\n\n\n");
 	}
 	
 	private void AllOfThem(int floydWarshallGraph[][]) {
@@ -148,9 +157,6 @@ public class Controler {
 		StringBuilder s = new StringBuilder();
 		
 		ArrayList<Node> nodes = graph.getNodes();
-		
-		int[][] matrice = getMatriceValeur();
-		
 		
 		s.append("\t");
 		for (Node n : nodes) {
@@ -216,7 +222,7 @@ public class Controler {
 		return x != 9999;
 	}
 
-	public boolean isTheGraphAnAbsorberCircuit() {
+	public boolean isNotAnAbsorberCircuit() {
 		
 		boolean isAbsorber = false;
 		
@@ -233,11 +239,6 @@ public class Controler {
 		}
 		
 		return isAbsorber;
-	}
-
-	public void showRoute() {
-		// TODO Auto-generated method stub
-		
 	}
 
 }
