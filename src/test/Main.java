@@ -7,13 +7,12 @@ import controler.Controler;
 
 public class Main {
 
+	@SuppressWarnings("resource")
 	public static void main(String[] args) {
-		
-		boolean tryAgain = true;
 		      
     	try {
     		
-    		while( tryAgain ) {
+    		while( true ) {
     			
 	    		@SuppressWarnings("resource")
 				Scanner scanner = new Scanner(System.in);

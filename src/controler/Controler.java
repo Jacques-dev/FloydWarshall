@@ -128,6 +128,7 @@ public class Controler {
 	return matrice;
 	}
 
+	@SuppressWarnings("resource")
 	public void FloydAlgoritm() {
 		try {
 			System.out.print( "Show all the route ? y/n : " );
@@ -183,6 +184,7 @@ public class Controler {
 		System.out.println("----------------------\n");
 	}
 
+	@SuppressWarnings("resource")
 	private void OneByOne(int floydWarshallGraph[][]) {
 		Scanner scanner = new Scanner(System.in);
         System.out.print( "Enter the first node : " );
