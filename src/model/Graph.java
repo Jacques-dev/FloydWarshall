@@ -4,14 +4,18 @@ import java.util.ArrayList;
 import java.util.Collections;
 
 public class Graph {
-	private int nbNode;
-	private int nbArc;
-	private ArrayList<Peer> peers;
-	private ArrayList<Node> nodes;
+	private final int nbNode;
+	private final int nbArc;
+	private final ArrayList<Peer> peers;
+	private final ArrayList<Node> nodes;
+	private final int[][] matrice;
 	
-	public Graph() {
-		this.peers = new ArrayList<Peer>();
-		this.nodes = new ArrayList<Node>();
+	public Graph(int nbNode, int nbArc, ArrayList<Peer> peers, ArrayList<Node> nodes, int[][] matrice) {
+		this.nbNode = nbNode;
+		this.nbArc = nbArc;
+		this.peers = peers;
+		this.nodes = nodes;
+		this.matrice = matrice;
 	}
 	
 	public void add(Peer peer) {
@@ -37,31 +41,15 @@ public class Graph {
 	}
 	
 	public int getSize() {
-		return nodes.size();
+		return getNbNode();
 	}
 	
 	public int getNbNode() {
 		return nbNode;
 	}
 
-	public void setNbNode(int nbNode) {
-		this.nbNode = nbNode;
-	}
-
 	public int getNbArc() {
 		return nbArc;
-	}
-
-	public void setNbArc(int nbArc) {
-		this.nbArc = nbArc;
-	}
-
-	public void setPeers(ArrayList<Peer> peers) {
-		this.peers = peers;
-	}
-
-	public void setNodes(ArrayList<Node> nodes) {
-		this.nodes = nodes;
 	}
 
 	public ArrayList<Peer> getPeers() {
@@ -70,5 +58,9 @@ public class Graph {
 	
 	public ArrayList<Node> getNodes() {
 		return nodes;
+	}
+	
+	public int[][] getMatrice() {
+		return matrice;
 	}
 }

@@ -12,13 +12,9 @@ public class Controler {
 
 	private Graph graph;
 	
-	public Controler() {
-		this.graph = new Graph();
-	}
-	
-	public void start(String file) {
+	public Controler(String file) {
 		try {
-			graph = FileManager.read(file);
+			this.graph = FileManager.read(file);
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -43,29 +39,11 @@ public class Controler {
 	private void matriceAdjacence() {
 		StringBuilder s = new StringBuilder();
 		
-		ArrayList<Peer> peers = graph.getPeers();
-		
 		ArrayList<Node> nodes = graph.getNodes();
 		
 		int size = nodes.size();
 		
-		int[][] matrice = new int[size][size];
-		
-		for (int i = 0 ; i != size ; i++) {
-			for (int j = 0 ; j != size ; j++) {
-				for (int k = 0 ; k != peers.size() ; k++) {
-					Node n1 = peers.get(k).getNodes().get(0);
-					Node n2 = peers.get(k).getNodes().get(1);
-					
-					if (n1.getId() == i && n2.getId() == j) {
-						matrice[i][j] = 1;
-						break;
-					} else {
-						matrice[i][j] = 0;
-					}
-				}
-			}
-		}
+		int[][] matrice = graph.getMatrice();
 		
 		s.append("  ");
 		for (Node n : nodes) {
@@ -150,8 +128,6 @@ public class Controler {
 		System.out.println("---------------\n");
 	}
 
-	
-
 	public void FloydAlgoritm() {
 		try {
 			System.out.print( "Show all the route y/n : " );
@@ -224,15 +200,20 @@ public class Controler {
 		for (int i = 0; i < size; i++) {
 			for (int j = 0; j < size; j++) {
 				for (int k = 0; k < size; k++) {
-					if (graphValue[j][i] + graphValue[i][k] < graphValue[j][k]) {
-						graphValue[j][k] = graphValue[j][i] + graphValue[i][k];
+					if (theRouteIsAppropriate(graphValue[j][k])) {
+						if (graphValue[j][i] + graphValue[i][k] < graphValue[j][k]) {
+							graphValue[j][k] = graphValue[j][i] + graphValue[i][k];
+						}
 					}
 				}
 			}
 		}
 		
-		
 		return graphValue;
+	}
+	
+	private boolean theRouteIsAppropriate(int x) {
+		return x != 9999;
 	}
 
 	public boolean isTheGraphAnAbsorberCircuit() {

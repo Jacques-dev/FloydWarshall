@@ -9,7 +9,7 @@ public class Main {
 
 	public static void main(String[] args) {
 		
-		Controler data = new Controler();
+		
 		
 		boolean tryAgain = true;
 		      
@@ -24,8 +24,7 @@ public class Main {
 //        	} catch(Exception e) {
 //        		System.out.println("");
 //        	}
-			
-			data.start("test.txt");
+			Controler data = new Controler("test.txt");
 			
 			data.print();
 			
