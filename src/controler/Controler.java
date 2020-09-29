@@ -12,6 +12,10 @@ public class Controler {
 
 	private Graph graph;
 	
+	/**
+	Controler is the controler of the program, his methodes are used in the Main 
+	@param file : a text file contanining a graph to study
+	*/
 	public Controler(String file) {
 		try {
 			this.graph = FileManager.read(file);
@@ -20,22 +24,34 @@ public class Controler {
 		}
 	}
 	
+	/**
+	@return a String which show the graph studied
+	*/
 	public String toString() {
 		return graph.toString();
 	}
 	
+	/**
+	print is used in the Main, it show three different version of the graph
+	*/
 	public void print() {
 		fileView();
 		matriceAdjacence();
 		matriceValeur();
 	}
 
+	/**
+	fileView is the basic view of the graph, it show's the different peers created
+	*/
 	private void fileView() {
 		System.out.println("-----GRAPH-----\n");
 		System.out.println(toString());
 		System.out.println("---------------\n");
 	}
 
+	/**
+	matriceAdjacence show the adjacent matrice of the graph
+	*/
 	private void matriceAdjacence() {
 		StringBuilder s = new StringBuilder();
 		
@@ -65,6 +81,9 @@ public class Controler {
 		System.out.println("---------------\n");
 	}
 	
+	/**
+	matriceValeur show the value matrice of the graph
+	*/
 	private void matriceValeur() {
 		StringBuilder s = new StringBuilder();
 		
@@ -100,6 +119,10 @@ public class Controler {
 		System.out.println("---------------\n");
 	}
 	
+	/**
+	Give a matrice containing the value of each link/Arc between nodes of the graph
+	@return a second degree tab of int
+	*/
 	private int[][] getMatriceValeur() {
 		ArrayList<Peer> peers = graph.getPeers();
 		
@@ -128,6 +151,10 @@ public class Controler {
 	return matrice;
 	}
 
+	/**
+	Give the choice to the user to chose if he/she wants to have all the shortest route in the graph between each nodes 
+	or just check one route of his/her choice
+	*/
 	@SuppressWarnings("resource")
 	public void FloydAlgoritm() {
 		try {
@@ -152,8 +179,11 @@ public class Controler {
 		System.out.println("\n\n\n");
 	}
 	
+	/**
+	Show all the shortest route in the graph between each nodes
+	*/
 	private void AllOfThem(int floydWarshallGraph[][]) {
-		int size = graph.getNbNode();
+		int size = graph.getSize();
 
 		StringBuilder s = new StringBuilder();
 		
@@ -184,6 +214,9 @@ public class Controler {
 		System.out.println("----------------------\n");
 	}
 
+	/**
+	Ask the user for which shortest route he/she want to see and do it
+	*/
 	@SuppressWarnings("resource")
 	private void OneByOne(int floydWarshallGraph[][]) {
 		Scanner scanner = new Scanner(System.in);
@@ -201,8 +234,12 @@ public class Controler {
 		
 	}
 	
+	/**
+	Use the algorithm of Floyd Marshall to search for the shortest route between two points 
+	@return a second degree tab of int
+	*/
 	public int[][] FloydWarshall() {
-		int size = graph.getNbNode();
+		int size = graph.getSize();
 		int graphValue[][] = getMatriceValeur();
 
 		for (int i = 0; i < size; i++) {
@@ -220,10 +257,18 @@ public class Controler {
 		return graphValue;
 	}
 	
+	/**
+	Check if the route can be used in the calculations for the Floyd Marshall algorithm
+	@return a boolean which indicate if the next route can be taking in account
+	*/
 	private boolean theRouteIsAppropriate(int x) {
 		return x != 9999;
 	}
 
+	/**
+	Check if the graph contains circuits
+	@return true or false
+	*/
 	public boolean isNotAnAbsorberCircuit() {
 		
 		boolean isAbsorber = false;
