@@ -27,6 +27,8 @@ public class Main {
 				
 				if (data.isNotAnAbsorberCircuit()) {
 					data.FloydAlgoritm();
+				} else {
+					System.out.println("This graph contains a circuit...");
 				}
     		}
 		
