@@ -219,11 +219,20 @@ public class Controler {
 	*/
 	@SuppressWarnings("resource")
 	private void OneByOne(int floydWarshallGraph[][]) {
+		int size = graph.getSize();
 		Scanner scanner = new Scanner(System.in);
         System.out.print( "Enter the first node : " );
         int n1 = Integer.parseInt(scanner.nextLine());
+        while (n1 >= size) {
+        	System.out.println("You typed an out of bound number!\nEnter the first node : ");
+        	n1 = Integer.parseInt(scanner.nextLine());
+        }
         System.out.print( "Enter the second node : " );
         int n2 = Integer.parseInt(scanner.nextLine());
+        while (n2 >= size) {
+        	System.out.println("You typed an out of bound number!\nEnter the second node : ");
+        	n2 = Integer.parseInt(scanner.nextLine());
+        }
         
         StringBuilder s = new StringBuilder();
 		
