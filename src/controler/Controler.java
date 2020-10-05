@@ -223,13 +223,13 @@ public class Controler {
 		Scanner scanner = new Scanner(System.in);
         System.out.print( "Enter the first node : " );
         int n1 = Integer.parseInt(scanner.nextLine());
-        while (n1 >= size) {
+        while (n1 >= size || n1 < 0) {
         	System.out.println("You typed an out of bound number!\nEnter the first node : ");
         	n1 = Integer.parseInt(scanner.nextLine());
         }
         System.out.print( "Enter the second node : " );
         int n2 = Integer.parseInt(scanner.nextLine());
-        while (n2 >= size) {
+        while (n2 >= size || n2 < 0) {
         	System.out.println("You typed an out of bound number!\nEnter the second node : ");
         	n2 = Integer.parseInt(scanner.nextLine());
         }
