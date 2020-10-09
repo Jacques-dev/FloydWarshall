@@ -199,7 +199,7 @@ public class Controler {
 		for (int i = 0; i < size; i++) {
 			s.append(i + "\t");
 			for (int j = 0; j < size; j++) {
-				if (floydWarshallGraph[i][j] == 9999) {
+				if (theRouteIsAppropriate(floydWarshallGraph[i][j])) {
 					s.append("x\t");
 				}
 				else {
@@ -236,7 +236,7 @@ public class Controler {
         
         StringBuilder s = new StringBuilder();
 		
-        s.append("(" + n1 + ") - " + (floydWarshallGraph[n1][n2] == 9999 ? "path does not exist" : floydWarshallGraph[n1][n2]) + " -> (" + n2 + ")");
+        s.append("(" + n1 + ") - " + (theRouteIsAppropriate(floydWarshallGraph[n1][n2]) ? "path does not exist" : floydWarshallGraph[n1][n2]) + " -> (" + n2 + ")");
         s.append("\n");
 		
 		System.out.println(s.toString());
@@ -254,11 +254,11 @@ public class Controler {
 		for (int i = 0; i < size; i++) {
 			for (int j = 0; j < size; j++) {
 				for (int k = 0; k < size; k++) {
-					if (theRouteIsAppropriate(graphValue[j][k])) {
+//					if (graphValue[j][k] != 9999) {
 						if (graphValue[j][i] + graphValue[i][k] < graphValue[j][k]) {
 							graphValue[j][k] = graphValue[j][i] + graphValue[i][k];
 						}
-					}
+//					}
 				}
 			}
 		}
@@ -271,7 +271,7 @@ public class Controler {
 	@return a boolean which indicate if the next route can be taking in account
 	*/
 	private boolean theRouteIsAppropriate(int x) {
-		return x != 9999;
+		return x == 9999;
 	}
 
 	/**

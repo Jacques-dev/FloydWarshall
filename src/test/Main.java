@@ -14,14 +14,14 @@ public class Main {
     		
     		while( true ) {
     			
-	    		@SuppressWarnings("resource")
-				Scanner scanner = new Scanner(System.in);
-	            System.out.print( "Enter the file name (quit to turn off): " );
-	            String file = scanner.nextLine();
+//	    		@SuppressWarnings("resource")
+//				Scanner scanner = new Scanner(System.in);
+//	            System.out.print( "Enter the file name (quit to turn off): " );
+//	            String file = scanner.nextLine();
+//	            
+//	            if(file.equals("quit")) return;
 	            
-	            if(file.equals("quit")) return;
-	            
-				Controler data = new Controler(file);
+				Controler data = new Controler("test2.txt");
 				
 				data.print();
 				
@@ -30,6 +30,8 @@ public class Main {
 				} else {
 					System.out.println("This graph contains a circuit...");
 				}
+				
+				return;
     		}
 		
     	} catch(Exception e) {
