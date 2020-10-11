@@ -254,11 +254,16 @@ public class Controler {
 		for (int i = 0; i < size; i++) {
 			for (int j = 0; j < size; j++) {
 				for (int k = 0; k < size; k++) {
-//					if (graphValue[j][k] != 9999) {
-						if (graphValue[j][i] + graphValue[i][k] < graphValue[j][k]) {
+					
+					
+					if (graphValue[j][i] + graphValue[i][k] < graphValue[j][k]) {
+						if (graphValue[j][i] == 9999 || graphValue[i][k] == 9999) {
+							
+						} else {
 							graphValue[j][k] = graphValue[j][i] + graphValue[i][k];
 						}
-//					}
+					}
+
 				}
 			}
 		}
