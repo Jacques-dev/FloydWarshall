@@ -7,7 +7,7 @@ public class Arc {
 	
 	/**
 	An arc is the "link" between two nodes
-    @param value : an arc is define by a value
+    @param value an arc is define by a value
 	*/
 	public Arc(int value) {
 		this.value = value;
