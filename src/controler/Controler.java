@@ -158,16 +158,16 @@ public class Controler {
 	@SuppressWarnings("resource")
 	public void FloydAlgoritm() {
 		try {
-			System.out.print( "Show all the route ? y/n : " );
+			System.out.print( "Montrer tous les plus courts chemins y/n : " );
 			Scanner scanner = new Scanner(System.in);
 			if (scanner.nextLine().equals("n")) {
 				OneByOne(FloydWarshall());
 						
-				System.out.print( "Try an other route ? y/n : " );
+				System.out.print( "Essayer un autre chemin y/n : " );
 				Scanner scanner2 = new Scanner(System.in);
 				while (scanner2.nextLine().equals("y")) {
 					OneByOne(FloydWarshall());
-					System.out.print( "Try an other route ? y/n : " );
+					System.out.print( "Essayer un autre chemin y/n : " );
 					scanner2 = new Scanner(System.in);
 				}
 			} else {
@@ -221,16 +221,16 @@ public class Controler {
 	private void OneByOne(int floydWarshallGraph[][]) {
 		int size = graph.getSize();
 		Scanner scanner = new Scanner(System.in);
-        System.out.print( "Enter the first node : " );
+        System.out.print( "Entrer le premier noeud : " );
         int n1 = Integer.parseInt(scanner.nextLine());
         while (n1 >= size || n1 < 0) {
-        	System.out.println("You typed an out of bound number!\nEnter the first node : ");
+        	System.out.println("Vous avez entrer un noeud hors champ!\nEntrer le premier noeud : ");
         	n1 = Integer.parseInt(scanner.nextLine());
         }
-        System.out.print( "Enter the second node : " );
+        System.out.print( "Entrer le premier noeud : " );
         int n2 = Integer.parseInt(scanner.nextLine());
         while (n2 >= size || n2 < 0) {
-        	System.out.println("You typed an out of bound number!\nEnter the second node : ");
+        	System.out.println("Vous avez entrer un noeud hors champ!\\nEntrer le premier noeud : ");
         	n2 = Integer.parseInt(scanner.nextLine());
         }
         

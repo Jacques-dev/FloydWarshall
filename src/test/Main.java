@@ -14,21 +14,19 @@ public class Main {
     		
     		while( true ) {
     			
-//	    		@SuppressWarnings("resource")
-//				Scanner scanner = new Scanner(System.in);
-//	            System.out.print( "Enter the file name (quit to turn off): " );
-//	            String file = scanner.nextLine();
-//	            
-//	            if(file.equals("quit")) return;
+	    		@SuppressWarnings("resource")
+				Scanner scanner = new Scanner(System.in);
+	            System.out.print( "Entrer le nom du fichier (ex : test.txt): " );
+	            String file = scanner.nextLine();
 	            
-				Controler data = new Controler("test2.txt");
+				Controler data = new Controler(file);
 				
 				data.print();
 				
 				if (data.isNotAnAbsorberCircuit()) {
 					data.FloydAlgoritm();
 				} else {
-					System.out.println("This graph contains a circuit...");
+					System.out.println("Ce graph possède un circuit...");
 				}
 				
 				return;
