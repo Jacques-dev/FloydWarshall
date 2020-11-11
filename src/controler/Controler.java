@@ -2,7 +2,6 @@ package controler;
 
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.Scanner;
 
 import model.Arc;
@@ -14,10 +13,6 @@ public class Controler {
 
 	private Graph graph;
 	private boolean indicator = false;
-	
-	private boolean getIndicator() {
-		return indicator;
-	}
 	
 	private void setIndicator(boolean x) {
 		indicator = x;
@@ -291,32 +286,25 @@ public class Controler {
 	}
 
 	public boolean isNotAnAbsorberCircuit() {
-
-		boolean isAbsorber;
 		
 		int[][] matrice = graph.getMatrice();
 		
 		
 		for (int i = 0; i < matrice.length; i++) {
-			System.out.println("sommet "+i+" : ");
 			if (indicator == true) return false;
-			isAbsorber = parcoursProfondeur(new Node(i), new Node(i), new ArrayList<Node>(), new ArrayList<Arc>());
-			if (isAbsorber == true) {return false;}
+			parcoursProfondeur(new Node(i), new Node(i), new ArrayList<Node>(), new ArrayList<Arc>());
 		}
 		
 		return true;
 	}
 	
-	private boolean parcoursProfondeur(Node origine, Node precedent, ArrayList<Node> visistedNode, ArrayList<Arc> arcs) {
+	private void parcoursProfondeur(Node origine, Node precedent, ArrayList<Node> visistedNode, ArrayList<Arc> arcs) {
 		
 		int[][] matrice = graph.getMatrice();
 		int matriceValeur[][] = getMatriceValeur();
 		
-		
-		
 		visistedNode.add(precedent);
 		ArrayList<Node> list = precedent.getSuccessor(graph.getMatrice(), precedent.getId(), graph.getNodes());
-		System.out.println("SUCCESSOR : " + list);
 		if (list != null) {
 			
 			for (Node n : list) {
@@ -325,27 +313,21 @@ public class Controler {
 					
 				for (Node x : visistedNode) {
 					if (suivant.getId() == x.getId() && suivant.getId() != origine.getId()) {
-						System.out.println("AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA");
-						return false;
+						return;
 					}
 				}
-				System.out.println();
-				Arc a = precedent.isAPeer(matrice, matriceValeur, n);
 				
+				Arc a = precedent.isAPeer(matrice, matriceValeur, n);
 				arcs.add(a);
-				System.out.println("ARCS : " + arcs);
 				
 				if (suivant.getId() != origine.getId()) {
-					System.out.println("OOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO");
 					parcoursProfondeur(origine, suivant, visistedNode, arcs);
 				} else {
-					System.out.println("isAbsorber : " + isAbsorber(arcs));
-					return isAbsorber(arcs);
+					isAbsorber(arcs);
 				}
 				
 			}
 		}
-		return false;
 	}
 	
 	/**
@@ -353,9 +335,7 @@ public class Controler {
 	@param list of Node
 	@return true or false
 	*/
-	public boolean isAbsorber(ArrayList<Arc> arcs) {
-		
-		boolean isAbsorber = false;
+	public void isAbsorber(ArrayList<Arc> arcs) {
 		
 		int counter = 0;
 		
@@ -364,11 +344,8 @@ public class Controler {
 		}
 		
 		if (counter < 0) {
-			isAbsorber = true;
 			setIndicator(true);
 		}
-		
-		return isAbsorber;
 	}
 
 }

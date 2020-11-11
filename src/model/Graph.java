@@ -1,7 +1,6 @@
 package model;
 
 import java.util.ArrayList;
-import java.util.Collections;
 
 public class Graph {
 	private final int nbNode;
@@ -71,4 +70,6 @@ public class Graph {
 	public int[][] getMatrice() {
 		return matrice;
 	}
+	
+	
 }

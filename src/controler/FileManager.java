@@ -56,8 +56,6 @@ public class FileManager {
 		
 		int[][] matrice = setMatrice(nbNode,peers);
 		
-		System.out.println("IAZEYIABZEIABIZE : "+nbNode);
-		
 		Graph g = new Graph(nbNode,nbArc,peers,nodes,matrice);
 		
 		return g;

@@ -15,11 +15,11 @@ public class Main {
     		while( true ) {
     			
 	    		@SuppressWarnings("resource")
-//				Scanner scanner = new Scanner(System.in);
-//	            System.out.print( "Entrer le nom du fichier (ex : test.txt): " );
-//	            String file = scanner.nextLine();
+				Scanner scanner = new Scanner(System.in);
+	            System.out.print( "Entrer le nom du fichier (ex : test.txt): " );
+	            String file = scanner.nextLine();
 	            
-				Controler data = new Controler("test4.txt");
+				Controler data = new Controler(file);
 				
 				data.print();
 				
