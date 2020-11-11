@@ -15,15 +15,16 @@ public class Main {
     		while( true ) {
     			
 	    		@SuppressWarnings("resource")
-				Scanner scanner = new Scanner(System.in);
-	            System.out.print( "Entrer le nom du fichier (ex : test.txt): " );
-	            String file = scanner.nextLine();
+//				Scanner scanner = new Scanner(System.in);
+//	            System.out.print( "Entrer le nom du fichier (ex : test.txt): " );
+//	            String file = scanner.nextLine();
 	            
-				Controler data = new Controler(file);
+				Controler data = new Controler("test4.txt");
 				
 				data.print();
 				
 				if (data.isNotAnAbsorberCircuit()) {
+					System.out.println("--Algorithme de FloydWarshall--");
 					data.FloydAlgoritm();
 				} else {
 					System.out.println("Ce graph possède un circuit...");

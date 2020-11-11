@@ -2,8 +2,10 @@ package controler;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.Scanner;
 
+import model.Arc;
 import model.Graph;
 import model.Node;
 import model.Peer;
@@ -11,6 +13,15 @@ import model.Peer;
 public class Controler {
 
 	private Graph graph;
+	private boolean indicator = false;
+	
+	private boolean getIndicator() {
+		return indicator;
+	}
+	
+	private void setIndicator(boolean x) {
+		indicator = x;
+	}
 	
 	/**
 	Controler is the controler of the program, his methodes are used in the Main 
@@ -279,24 +290,82 @@ public class Controler {
 		return x == 9999;
 	}
 
+	public boolean isNotAnAbsorberCircuit() {
+
+		boolean isAbsorber;
+		
+		int[][] matrice = graph.getMatrice();
+		
+		
+		for (int i = 0; i < matrice.length; i++) {
+			System.out.println("sommet "+i+" : ");
+			if (indicator == true) return false;
+			isAbsorber = parcoursProfondeur(new Node(i), new Node(i), new ArrayList<Node>(), new ArrayList<Arc>());
+			if (isAbsorber == true) {return false;}
+		}
+		
+		return true;
+	}
+	
+	private boolean parcoursProfondeur(Node origine, Node precedent, ArrayList<Node> visistedNode, ArrayList<Arc> arcs) {
+		
+		int[][] matrice = graph.getMatrice();
+		int matriceValeur[][] = getMatriceValeur();
+		
+		
+		
+		visistedNode.add(precedent);
+		ArrayList<Node> list = precedent.getSuccessor(graph.getMatrice(), precedent.getId(), graph.getNodes());
+		System.out.println("SUCCESSOR : " + list);
+		if (list != null) {
+			
+			for (Node n : list) {
+				
+				Node suivant = n;
+					
+				for (Node x : visistedNode) {
+					if (suivant.getId() == x.getId() && suivant.getId() != origine.getId()) {
+						System.out.println("AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA");
+						return false;
+					}
+				}
+				System.out.println();
+				Arc a = precedent.isAPeer(matrice, matriceValeur, n);
+				
+				arcs.add(a);
+				System.out.println("ARCS : " + arcs);
+				
+				if (suivant.getId() != origine.getId()) {
+					System.out.println("OOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO");
+					parcoursProfondeur(origine, suivant, visistedNode, arcs);
+				} else {
+					System.out.println("isAbsorber : " + isAbsorber(arcs));
+					return isAbsorber(arcs);
+				}
+				
+			}
+		}
+		return false;
+	}
+	
 	/**
 	Check if the graph contains circuits
+	@param list of Node
 	@return true or false
 	*/
-	public boolean isNotAnAbsorberCircuit() {
+	public boolean isAbsorber(ArrayList<Arc> arcs) {
 		
 		boolean isAbsorber = false;
 		
 		int counter = 0;
 		
-		ArrayList<Peer> list = graph.getPeers();
-		
-		for (Peer p : list) {
-			counter += p.getArc().getValue();
+		for (Arc a : arcs) {
+			counter += a.getValue();
 		}
 		
-		if (counter > 0) {
+		if (counter < 0) {
 			isAbsorber = true;
+			setIndicator(true);
 		}
 		
 		return isAbsorber;

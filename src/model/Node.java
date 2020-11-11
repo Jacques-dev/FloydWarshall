@@ -1,5 +1,6 @@
 package model;
 
+import java.util.ArrayList;
 import java.util.Objects;
 
 public class Node implements Comparable<Node>{
@@ -54,5 +55,28 @@ public class Node implements Comparable<Node>{
 	@Override
 	public int compareTo(Node n) {
 		return this.id - n.id;
+	}
+
+	public ArrayList<Node> getSuccessor(int[][] matrice, int id, ArrayList<Node> nodes) {
+		ArrayList<Node> list = new ArrayList<Node>();
+		for (int i = 0; i < matrice.length; i++) {
+			if (matrice[id][i] == 1) {
+				
+				for (Node n : nodes) {
+					if (n.getId() == i) list.add(n);
+				}
+			}
+		}
+		if (list.size() == 0) {
+			return null;
+		}
+		return list;
+	}
+	
+	public Arc isAPeer(int[][] matrice, int[][] matriceValeur, Node n2) {
+		if (matrice[id][n2.getId()] == 1) {
+			return new Arc(matriceValeur[id][n2.getId()]);
+		}
+		return null;
 	}
 }
