@@ -84,8 +84,11 @@ public class FileManager {
 	private static ArrayList<Node> addNode(ArrayList<Node> nodes, String line) {
 		ArrayList<Node> tab = readPeer(line).getNodes();
 		
-		if (!nodes.contains(tab.get(0)) && !nodes.contains(tab.get(1))) {
+		if (!nodes.contains(tab.get(0))) {
 			nodes.add(tab.get(0));
+		}
+		
+		if (!nodes.contains(tab.get(1)) ){
 			nodes.add(tab.get(1));
 		}
 		
@@ -123,9 +126,9 @@ public class FileManager {
 	private static int[][] setMatrice(int nbNode, ArrayList<Peer> peers) {
 		int[][] mat = new int[nbNode][nbNode];
 		
-		for (int i = 0 ; i != nbNode ; i++) {
-			for (int j = 0 ; j != nbNode ; j++) {
-				for (int k = 0 ; k != peers.size() ; k++) {
+		for (int i = 0 ; i < nbNode ; i++) {
+			for (int j = 0 ; j < nbNode ; j++) {
+				for (int k = 0 ; k < peers.size() ; k++) {
 					Node n1 = peers.get(k).getNodes().get(0);
 					Node n2 = peers.get(k).getNodes().get(1);
 					

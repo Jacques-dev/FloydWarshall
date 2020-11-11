@@ -65,6 +65,8 @@ public class Controler {
 		
 		int size = nodes.size();
 		
+		System.out.println();
+		
 		int[][] matrice = graph.getMatrice();
 		
 		s.append("  ");
@@ -74,9 +76,9 @@ public class Controler {
 		
 		s.append("\n");
 		
-		for (int i = 0 ; i != size ; i++) {
+		for (int i = 0 ; i < size ; i++) {
 			s.append(i + " ");
-			for (int j = 0 ; j != size ; j++) {
+			for (int j = 0 ; j < size ; j++) {
 				s.append(matrice[i][j] + " ");
 			}
 			s.append("\n");
