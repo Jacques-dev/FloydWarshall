@@ -333,7 +333,7 @@ public class Controler {
 	}
 	
 	/**
-	Check if the graph contains circuits
+	Check if the graph contains absorbant circuits
 	@param list of Node
 	@return true or false
 	*/

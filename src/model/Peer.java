@@ -40,7 +40,7 @@ public class Peer implements Comparable<Peer>{
 	public String toString() {
 		StringBuilder s = new StringBuilder();
 		
-        s.append("(" + n1 + ") - " + a + " -> (" + n2 + ")");
+        s.append("(" + n1 + ") -> " + a + " -> (" + n2 + ")");
         s.append("\n");
 		
 		return s.toString();
