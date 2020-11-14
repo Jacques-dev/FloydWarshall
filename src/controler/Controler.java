@@ -13,11 +13,20 @@ public class Controler {
 
 	private Graph graph;
 	private boolean indicator = false;
+	private String[][] paths;
 	
 	private void setIndicator(boolean x) {
 		indicator = x;
 	}
 	
+	public String[][] getPaths() {
+		return paths;
+	}
+
+	public void setPaths(String[][] paths) {
+		this.paths = paths;
+	}
+
 	/**
 	Controler is the controler of the program, his methodes are used in the Main 
 	@param file : a text file contanining a graph to study
@@ -25,6 +34,7 @@ public class Controler {
 	public Controler(String file) {
 		try {
 			this.graph = FileManager.read(file);
+			paths = new String[graph.getSize()][graph.getSize()];
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -192,6 +202,7 @@ public class Controler {
 	*/
 	private void AllOfThem(int floydWarshallGraph[][]) {
 		int size = graph.getSize();
+		int graphValue[][] = getMatriceValeur();
 
 		StringBuilder s = new StringBuilder();
 		
@@ -215,6 +226,16 @@ public class Controler {
 				}
 			}
 			s.append("\n");
+		}
+		s.append("\n");
+		
+		for (int i = 0; i < size; i++) {
+			for (int j = 0; j < size; j++) {
+				if (!paths[i][j].equals("x") && i!=j) {
+					int x = Integer.valueOf((paths[i][j].substring(paths[i][j].length() - 2, paths[i][j].length() - 1)));
+					s.append(paths[i][j] + " --> " + graphValue[x][j] + " --> (" + j + ")\n");
+				}
+			}
 		}
 		
 		System.out.println("----Floyd Warshall----\n");
@@ -252,12 +273,22 @@ public class Controler {
 	}
 	
 	/**
-	Use the algorithm of Floyd Marshall to search for the shortest route between two points 
+	Use the algorithm of FloydWarshall to search for the shortest route between two points 
 	@return a second degree tab of int
 	*/
 	public int[][] FloydWarshall() {
 		int size = graph.getSize();
 		int graphValue[][] = getMatriceValeur();
+		int graphStaticValue[][] = getMatriceValeur();
+		
+		for (int i = 0; i < size; i++) {
+			for (int j = 0; j < size; j++) {
+				paths[i][j] = "x";
+				if (graphValue[i][j] != 9999) {
+					paths[i][j] = "(" + Integer.toString(i) + ")";
+				}
+			}
+		}
 
 		for (int i = 0; i < size; i++) {
 			for (int j = 0; j < size; j++) {
@@ -269,18 +300,17 @@ public class Controler {
 							
 						} else {
 							graphValue[j][k] = graphValue[j][i] + graphValue[i][k];
+							paths[j][k] = paths[j][i] + " --> " + graphStaticValue[j][i] + " --> " + paths[i][k];
 						}
 					}
-
 				}
 			}
 		}
-		
 		return graphValue;
 	}
 	
 	/**
-	Check if the route can be used in the calculations for the Floyd Marshall algorithm
+	Check if the route can be used in the calculations for the FloydWarshall algorithm
 	@return a boolean which indicate if the next route can be taking in account
 	*/
 	private boolean theRouteIsAppropriate(int x) {
