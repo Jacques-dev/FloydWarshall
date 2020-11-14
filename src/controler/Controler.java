@@ -176,7 +176,7 @@ public class Controler {
 	@SuppressWarnings("resource")
 	public void FloydAlgoritm() {
 		try {
-			System.out.print( "Montrer tous les plus courts chemins y/n : " );
+			System.out.print( "Montrer tous les plus courts chemins : y |Tester chemin par chemin : n\n" );
 			Scanner scanner = new Scanner(System.in);
 			if (scanner.nextLine().equals("n")) {
 				OneByOne(FloydWarshall());
@@ -188,6 +188,7 @@ public class Controler {
 					System.out.print( "Essayer un autre chemin y/n : " );
 					scanner2 = new Scanner(System.in);
 				}
+				
 			} else {
 				AllOfThem(FloydWarshall());
 			}
@@ -250,6 +251,7 @@ public class Controler {
 	private void OneByOne(int floydWarshallGraph[][]) {
 		int size = graph.getSize();
 		int graphValue[][] = getMatriceValeur();
+		
 		Scanner scanner = new Scanner(System.in);
         System.out.print( "Entrer le premier noeud : " );
         int n1 = Integer.parseInt(scanner.nextLine());
@@ -257,21 +259,21 @@ public class Controler {
         	System.out.println("Vous avez entrer un noeud hors champ!\nEntrer le premier noeud : ");
         	n1 = Integer.parseInt(scanner.nextLine());
         }
-        System.out.print( "Entrer le premier noeud : " );
-        int n2 = Integer.parseInt(scanner.nextLine());
+        Scanner scanner2 = new Scanner(System.in);
+        System.out.print( "Entrer le second noeud : " );
+        int n2 = Integer.parseInt(scanner2.nextLine());
         while (n2 >= size || n2 < 0) {
-        	System.out.println("Vous avez entrer un noeud hors champ!\\nEntrer le second noeud : ");
-        	n2 = Integer.parseInt(scanner.nextLine());
+        	System.out.println("Vous avez entrer un noeud hors champ!\nEntrer le second noeud : ");
+        	n2 = Integer.parseInt(scanner2.nextLine());
         }
         
         StringBuilder s = new StringBuilder();
         
-        int x = Integer.valueOf((paths[n1][n2].substring(paths[n1][n2].length() - 2, paths[n1][n2].length() - 1)));
-        
         if (theRouteIsAppropriate(floydWarshallGraph[n1][n2])) {
-        	s.append("path does not exist");
+        	s.append("\nCe chemin n'existe pas...\n\n");
         }
         else {
+        	int x = Integer.valueOf((paths[n1][n2].substring(paths[n1][n2].length() - 2, paths[n1][n2].length() - 1)));
         	s.append(paths[n1][n2] + " --> " + graphValue[x][n2] + " --> (" + n2 + ")\n");
         }
 		
@@ -371,8 +373,7 @@ public class Controler {
 	
 	/**
 	Check if the graph contains absorbant circuits
-	@param list of Node
-	@return true or false
+	@param arcs is the list of arc contained in the graph
 	*/
 	public void isAbsorber(ArrayList<Arc> arcs) {
 		

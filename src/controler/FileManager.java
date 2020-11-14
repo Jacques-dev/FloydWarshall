@@ -19,6 +19,7 @@ public class FileManager {
 	Read permit to read a text file and give the corresponding graph
 	@param file : a string given by the user at the begining of the program which has to correspond to a real text file
     @return the graph which one will be used for the rest of the instruction of the program
+    @throws IOException prevent for any exception
 	*/
 	public static Graph read(String file) throws IOException {
 		

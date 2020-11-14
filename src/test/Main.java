@@ -29,8 +29,6 @@ public class Main {
 				} else {
 					System.out.println("Ce graph possède un circuit...");
 				}
-				
-				return;
     		}
 		
     	} catch(Exception e) {
