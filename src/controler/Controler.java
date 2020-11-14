@@ -4,7 +4,6 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Scanner;
 
-import model.Arc;
 import model.Graph;
 import model.Node;
 import model.Peer;
@@ -12,12 +11,7 @@ import model.Peer;
 public class Controler {
 
 	private Graph graph;
-	private boolean indicator = false;
 	private String[][] paths;
-	
-	private void setIndicator(boolean x) {
-		indicator = x;
-	}
 	
 	public String[][] getPaths() {
 		return paths;
@@ -309,7 +303,11 @@ public class Controler {
 							
 						} else {
 							graphValue[j][k] = graphValue[j][i] + graphValue[i][k];
-							paths[j][k] = paths[j][i] + " --> " + graphStaticValue[j][i] + " --> " + paths[i][k];
+							
+							int start = Integer.valueOf((paths[j][i].substring(paths[j][i].length() - 2, paths[j][i].length() - 1)));
+							int end = Integer.valueOf((paths[i][k].substring(1, 2)));
+							
+							paths[j][k] = paths[j][i] + " --> " + graphStaticValue[start][end] + " --> " + paths[i][k];
 						}
 					}
 				}
@@ -326,66 +324,22 @@ public class Controler {
 		return x == 9999;
 	}
 
+	/**
+	Check if the graph contains absorbant circuits
+	*/
 	public boolean isNotAnAbsorberCircuit() {
 		
-		int[][] matrice = graph.getMatrice();
-		
+		int[][] matrice = FloydWarshall();
 		
 		for (int i = 0; i < matrice.length; i++) {
-			if (indicator == true) return false;
-			parcoursProfondeur(new Node(i), new Node(i), new ArrayList<Node>(), new ArrayList<Arc>());
+			for(int j = 0; j < matrice.length; j++) {
+				if (matrice[i][j] < 0 && i == j) {
+					return false;
+				}
+			}
 		}
 		
 		return true;
-	}
-	
-	private void parcoursProfondeur(Node origine, Node precedent, ArrayList<Node> visistedNode, ArrayList<Arc> arcs) {
-		
-		int[][] matrice = graph.getMatrice();
-		int matriceValeur[][] = getMatriceValeur();
-		
-		visistedNode.add(precedent);
-		ArrayList<Node> list = precedent.getSuccessor(graph.getMatrice(), precedent.getId(), graph.getNodes());
-		if (list != null) {
-			
-			for (Node n : list) {
-				
-				Node suivant = n;
-					
-				for (Node x : visistedNode) {
-					if (suivant.getId() == x.getId() && suivant.getId() != origine.getId()) {
-						return;
-					}
-				}
-				
-				Arc a = precedent.isAPeer(matrice, matriceValeur, n);
-				arcs.add(a);
-				
-				if (suivant.getId() != origine.getId()) {
-					parcoursProfondeur(origine, suivant, visistedNode, arcs);
-				} else {
-					isAbsorber(arcs);
-				}
-				
-			}
-		}
-	}
-	
-	/**
-	Check if the graph contains absorbant circuits
-	@param arcs is the list of arc contained in the graph
-	*/
-	public void isAbsorber(ArrayList<Arc> arcs) {
-		
-		int counter = 0;
-		
-		for (Arc a : arcs) {
-			counter += a.getValue();
-		}
-		
-		if (counter < 0) {
-			setIndicator(true);
-		}
 	}
 
 }
