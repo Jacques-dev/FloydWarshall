@@ -249,6 +249,7 @@ public class Controler {
 	@SuppressWarnings("resource")
 	private void OneByOne(int floydWarshallGraph[][]) {
 		int size = graph.getSize();
+		int graphValue[][] = getMatriceValeur();
 		Scanner scanner = new Scanner(System.in);
         System.out.print( "Entrer le premier noeud : " );
         int n1 = Integer.parseInt(scanner.nextLine());
@@ -259,14 +260,20 @@ public class Controler {
         System.out.print( "Entrer le premier noeud : " );
         int n2 = Integer.parseInt(scanner.nextLine());
         while (n2 >= size || n2 < 0) {
-        	System.out.println("Vous avez entrer un noeud hors champ!\\nEntrer le premier noeud : ");
+        	System.out.println("Vous avez entrer un noeud hors champ!\\nEntrer le second noeud : ");
         	n2 = Integer.parseInt(scanner.nextLine());
         }
         
         StringBuilder s = new StringBuilder();
-		
-        s.append("(" + n1 + ") - " + (theRouteIsAppropriate(floydWarshallGraph[n1][n2]) ? "path does not exist" : floydWarshallGraph[n1][n2]) + " -> (" + n2 + ")");
-        s.append("\n");
+        
+        int x = Integer.valueOf((paths[n1][n2].substring(paths[n1][n2].length() - 2, paths[n1][n2].length() - 1)));
+        
+        if (theRouteIsAppropriate(floydWarshallGraph[n1][n2])) {
+        	s.append("path does not exist");
+        }
+        else {
+        	s.append(paths[n1][n2] + " --> " + graphValue[x][n2] + " --> (" + n2 + ")\n");
+        }
 		
 		System.out.println(s.toString());
 		
